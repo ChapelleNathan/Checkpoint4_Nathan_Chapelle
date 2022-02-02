@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}
+{{ parent() }} - Mon Fil
+{% endblock %}
+
+{% block stylesheets %}
+{{ encore_entry_link_tags('feed') }}
+{% endblock %}
 
 {% block body %}
 <style>
@@ -18,17 +24,39 @@
 </style>
 
 <div class="example-wrapper">
-    <h1 class="text-center text-center">Votre Fil</h1>
-    {% for post in posts %}
-    <div class="card" style="width: 18rem;">
-        <img src="{{ post.picturePath }}" class="card-img-top" alt="photo postée par {{ post.user.pseudo }}">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+    <h1 class="text-center text-center mt-5 mb-3">Votre Fil</h1>
+    <section class="posts">
+        {% for post in posts %}
+        <div class="card mb-4">
+            <p class="mx-3 my-1">{{ post.user.pseudo }}</p>
+            <img src="{{ post.picturePath }}" class="card-img-top rounded-0" alt="photo postée par {{ post.user.pseudo }}">
+            <div class="card-body py-1">
+                <div class="row">
+                    <div class="likes d-flex col-10">
+                        <div class="col-2 text-start">
+                            <i class="bi bi-heart"></i>
+                        </div>
+                        <div class="col-2 text-start">
+                            <i class="bi bi-chat"></i>
+                        </div>
+                    </div>
+                    <div class="col-2 text-end">
+                        <i class="bi bi-star"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="description">
+                            <span class="user">
+                                {{ post.user.pseudo }}
+                            </span>
+                            {{ post.description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    </section>
 </div>
 {% endblock %}
