@@ -1,20 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}
+{{ parent() }} - Mon Fil
+{% endblock %}
+
+{% block stylesheets %}
+{{ encore_entry_link_tags('feed') }}
+{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
+
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/nathanchapelle/quest/Checkpoint/Checkpoint4_Focusse/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/nathanchapelle/quest/Checkpoint/Checkpoint4_Focusse/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+    <h1 class="text-center text-center mt-5 mb-3">Votre Fil</h1>
+    <section class="posts">
+        {% for post in posts %}
+        <div class="card mb-4">
+            <p class="mx-3 my-1">{{ post.user.pseudo }}</p>
+            <img src="{{ post.picturePath }}" class="card-img-top rounded-0" alt="photo postée par {{ post.user.pseudo }}">
+            <div class="card-body py-1">
+                <div class="row">
+                    <div class="likes d-flex col-10">
+                        <div class="col-2 text-start">
+                            <i class="bi bi-heart"></i>
+                        </div>
+                        <div class="col-2 text-start">
+                            <i class="bi bi-chat"></i>
+                        </div>
+                    </div>
+                    <div class="col-2 text-end">
+                        <i class="bi bi-star"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="description">
+                            <span class="user">
+                                {{ post.user.pseudo }}
+                            </span>
+                            {{ post.description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
 </div>
 {% endblock %}
