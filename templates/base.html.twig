@@ -18,6 +18,14 @@
     </head>
     <body>
         {% include "components/_navbar.html.twig" %}
+        {% for category, message in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endfor %}
         {% block body %}{% endblock %}
     </body>
 </html>

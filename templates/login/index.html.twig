@@ -27,7 +27,7 @@
                     <label for="password">Mot de Passe</label>
                 </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                <p class="text-center">Pas de compte ? <a href="">inscrivez vous ici</a></p>
+                <p class="text-center">Pas de compte ? <a href="{{ path('app_register') }}">inscrivez vous ici</a></p>
                 <div class="row">
                     <button class="btn btn-secondary text-light col-10 offset-1">Se connecter</button>
                 </div>
