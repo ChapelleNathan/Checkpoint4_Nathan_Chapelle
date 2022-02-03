@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}{{ parent() }} - Commentaires{% endblock %}
 {% block stylesheets %}
 {{ encore_entry_link_tags('post') }}
 {% endblock %}
