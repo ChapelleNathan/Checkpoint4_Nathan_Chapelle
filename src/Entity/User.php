@@ -68,14 +68,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="followed")
+     * @ORM\ManyToMany(targetEntity=User::class)
+     * @ORM\JoinTable(name="user_follower")
      */
     private $followers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="followers")
+     * @ORM\ManyToMany(targetEntity=User::class)
+     * @ORM\JoinTable(name="user_follow")
      */
     private $followed;
+
+
 
     public function __construct()
     {
@@ -299,7 +303,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->followed->contains($followed)) {
             $this->followed[] = $followed;
-            $followed->addFollower($this);
         }
 
         return $this;
@@ -307,9 +310,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeFollowed(self $followed): self
     {
-        if ($this->followed->removeElement($followed)) {
-            $followed->removeFollower($this);
-        }
+        $this->followed->removeElement($followed);
 
         return $this;
     }
@@ -319,7 +320,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->getFollowed()->contains($user)) {
             return true;
         }
-        
+
+        return false;
+    }
+
+    public function follower(User $user): bool
+    {
+        if ($this->getFollowers()->contains($user)) {
+            return true;
+        }
+
         return false;
     }
 }
