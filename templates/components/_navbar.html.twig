@@ -6,11 +6,17 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav text-center">
+                {% if is_granted('ROLE_USER') %}
+                <a class="nav-link" href="{{ path('user_show', {id : app.user.id}) }}">
+                    <img src="/{{ app.user.profilePicture }}" class="navProfile img-thumbnail rounded-circle" alt="photo de profil de {{ app.user.pseudo }}">
+                    {{ app.user.pseudo }}
+                </a>
+                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                {% else %}
+                <a class="nav-link" href="{{ path('login') }}">Se connecter</a>
+                {% endif %}
                 <!--TODO Faire le liens adaptatif quand la connexion sera faite-->
-                <a class="nav-link" href="/profil/97">Nathan Chapelle</a>
-                <a class="nav-link" href="#">Pricing</a>
-                <a class="nav-link disabled">Disabled</a>
             </div>
         </div>
     </div>

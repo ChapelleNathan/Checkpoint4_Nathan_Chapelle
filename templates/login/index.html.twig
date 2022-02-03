@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Connexion{% endblock %}
+{% block stylesheets %}
+{{ encore_entry_link_tags('connexion') }}
+{% endblock %}
+{% block body %}
+
+<div class="connexion-form">
+    {% if error %}
+    <div class="alert alert-danger">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+    </div>
+    {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title text-center">Connexion à Focusse</h5>
+            <form class="" action="{{ path('login') }}" method="post">
+                <div class="form-floating mb-3">
+                    <input type="email" id="floatingInput" class="form-control" placeholder="name@example.com"
+                        name="_username" value="{{ last_username }}">
+                    <label for="floatingInput">Email</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" placeholder="password" id="password" name="_password">
+                    <label for="password">Mot de Passe</label>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <p class="text-center">Pas de compte ? <a href="">inscrivez vous ici</a></p>
+                <div class="row">
+                    <button class="btn btn-secondary text-light col-10 offset-1">Se connecter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
