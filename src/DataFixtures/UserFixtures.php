@@ -27,6 +27,7 @@ class UserFixtures extends Fixture
             $user->setLastname($faker->lastName());
             $user->setPseudo($user->getFirstname() . '_' . $user->getLastname());
             $user->setPassword($this->passwordHasher->hashPassword($user, $faker->password()));
+            $user->setProfilePicture('build/images/placeholder.png');
             $this->addReference('user_' . $i, $user);
             $manager->persist($user);
         }
@@ -37,6 +38,8 @@ class UserFixtures extends Fixture
         $john->setLastname('Doe');
         $john->setPseudo('John_Doe');
         $john->setPassword($this->passwordHasher->hashPassword($john, 'whoami'));
+        $john->setProfilePicture('uploads/profilePictures/erinaPP.png');
+        copy(__DIR__ . '/erinaPP.png', __DIR__ . '/../../public/uploads/profilePictures/erinaPP.png');
         $this->setReference('user_john', $john);
         $manager->persist($john);
 

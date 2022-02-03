@@ -27,9 +27,18 @@
     <h1 class="text-center text-center mt-5 mb-3">Votre Fil</h1>
     <section class="posts">
         {% for post in posts %}
-        <div class="card mb-4">
-            <p class="mx-3 my-1">{{ post.user.pseudo }}</p>
-            <img src="{{ post.picturePath }}" class="card-img-top rounded-0" alt="photo postée par {{ post.user.pseudo }}">
+        <div class="card mb-4 mx-3 my-1">
+            <div class="row my-1">
+                <div class="col-3 text-center p-0">
+                    <img src="{{ post.user.profilePicture }}" class="img-thumbnail pp rounded-circle"
+                        alt="photo de profil de {{ post.user.pseudo }}">
+                </div>
+                <div class="col d-flex p-0">
+                    <p class="m-0 text-start align-self-center pseudo">{{ post.user.pseudo }}</p>
+                </div>
+            </div>
+            <img src="{{ post.picturePath }}" class="card-img-top rounded-0"
+                alt="photo postée par {{ post.user.pseudo }}">
             <div class="card-body py-1">
                 <div class="row">
                     <div class="likes d-flex col-10">

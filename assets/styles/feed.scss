@@ -1,7 +1,7 @@
 @import 'variable.scss';
 
 .description {
-    font-size: 0.8em;
+    font-size: .8em;
 }
 
 .bi {
@@ -10,5 +10,14 @@
 
 .user{
     font-weight: bold;
+    font-size: 0.9em;
+}
+
+.pp {
+    width: 40px;
+    height: 40px;
+}
+
+.pseudo {
     font-size: 0.9em;
 }
