@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Posts;
+use App\Form\CommentsType;
 use App\Form\PostsType;
 use App\Repository\PostsRepository;
 use DateTime;
@@ -54,10 +56,22 @@ class PostsController extends AbstractController
     /**
      * @Route("/{id}", name="posts_show", methods={"GET"})
      */
-    public function show(Posts $post): Response
+    public function show(Posts $post, Request $request, EntityManagerInterface $em): Response
     {
+        $comment = new Comments();
+        $form = $this->createForm(CommentsType::class, $comment);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setUser($this->getUser());
+            $comment->setPost($post);
+            $em->persist($comment);
+            $em->flush();
+            return $this->redirectToRoute('app_home', ['id' => $post->getId()]);
+        }
         return $this->render('posts/show.html.twig', [
             'post' => $post,
+            'form' => $form->createView(),
         ]);
     }
 
