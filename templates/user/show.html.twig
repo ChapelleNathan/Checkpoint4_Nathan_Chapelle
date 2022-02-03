@@ -18,7 +18,7 @@
     <div class="col-4">
         <!--TODO faire le show d'un post -->
         <a href="">
-            <img src="/{{ post.picturePath }}" class="img-fluid" alt="post de {{ user.pseudo }}">
+            <img src="/{{ vich_uploader_asset(post) }}" class="img-fluid" alt="post de {{ user.pseudo }}">
         </a>
     </div>
     {% endfor %}

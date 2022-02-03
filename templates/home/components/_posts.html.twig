@@ -38,7 +38,7 @@
                     {{ post.description }}
                 </p>
                 {% endif %}
-
+                <p class="text-secondary postedAt"> posté le : {{ post.updatedAt|date("d M Y", "Europe/Paris") }}</p>
             </div>
         </div>
     </div>
