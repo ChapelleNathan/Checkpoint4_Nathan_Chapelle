@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Posts;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -26,8 +27,9 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
         for($i = 0; $i < UserFixtures::USERS; $i++) {
             $post = new Posts();
             $post->setUser($this->getReference('user_' . $i));
-            $post->setPicturePath('uploads/posts/'. self::IMAGES[$i]);
+            $post->setPicturePath(self::IMAGES[$i]);
             $post->setDescription($faker->paragraph(2));
+            $post->setUpdatedAt(new DateTime());
             $manager->persist($post);
         }
         $manager->flush();

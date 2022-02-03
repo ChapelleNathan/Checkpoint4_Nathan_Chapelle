@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\PostsRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=PostsRepository::class)
+ * @Vich\Uploadable
  */
 class Posts
 {
@@ -28,9 +31,33 @@ class Posts
     private $picturePath;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Vich\UploadableField(mapping="post_file", fileNameProperty="picturePath")
+     */
+    private $pictureFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
+    public function setPictureFile(File $image = null): Posts
+    {
+        $this->pictureFile = $image;
+        if($image) {
+            $this->setUpdatedAt(new DateTime());
+        }
+        return $this;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +96,18 @@ class Posts
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

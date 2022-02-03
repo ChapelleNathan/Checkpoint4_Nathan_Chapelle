@@ -12,7 +12,8 @@
             </a>
         </div>
     </div>
-    <img src="{{ post.picturePath }}" class="card-img-top rounded-0" alt="photo postée par {{ post.user.pseudo }}">
+    <img src="{{ vich_uploader_asset(post) }}" class="card-img-top rounded-0"
+        alt="photo postée par {{ post.user.pseudo }}">
     <div class="card-body py-1">
         <div class="row">
             <div class="likes d-flex col-10">
@@ -29,12 +30,15 @@
         </div>
         <div class="row">
             <div class="col">
+                {% if post.description %}
                 <p class="description">
                     <span class="user">
                         {{ post.user.pseudo }}
                     </span>
                     {{ post.description }}
                 </p>
+                {% endif %}
+                <p class="text-secondary postedAt"> posté le : {{ post.updatedAt|date("d M Y", "Europe/Paris") }}</p>
             </div>
         </div>
     </div>

@@ -47,4 +47,12 @@ class PostsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllDesc(): ?array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
