@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostsRepository")
@@ -29,16 +31,21 @@ class Posts
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255, maxMessage="Le nom du fichier doit faire moins de 255 caractères")
      */
     private $picturePath;
 
     /**
      * @Vich\UploadableField(mapping="post_file", fileNameProperty="picturePath")
+     * @Assert\File(maxSize="1M", mimeTypes={"image/jpeg", "image/png", "image/webp"})
      */
     private $pictureFile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255, maxMessage="La description doit faire moins de 255 caractères")
      */
     private $description;
 

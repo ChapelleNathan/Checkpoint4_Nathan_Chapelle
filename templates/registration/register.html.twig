@@ -3,14 +3,13 @@
 {% block title %}{{ parent() }} - Inscription{% endblock %}
 
 {% block body %}
+<h1 class="text-center mt-4 mb-3">Inscription</h1>
 {% for flashError in app.flashes('verify_email_error') %}
 <div class="alert alert-danger" role="alert">{{ flashError }}</div>
 {% endfor %}
-
-<h1 class="text-center mt-4 mb-3">Inscription</h1>
-
 <div class="card">
     <div class="card-body">
+        {{ form_start(registrationForm) }}
         <div class="row mb-3">
             {{ form_label(registrationForm.email)}}
             {{ form_widget(registrationForm.email) }}

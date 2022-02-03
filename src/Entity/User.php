@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -25,6 +27,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Length(max=180, maxMessage="L'email doit faire moins de 180 caractères")
+     * @Assert\Email(message="Le format '{{ value }}' n'est pas correct ")
+     * @Assert\NotBlank
      */
     private $email;
 
@@ -36,21 +41,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Type("string")
+     * // I don't know why, but Assert\NotBlank block the register
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255, maxMessage="Le pseudo doit faire moins de 255 caractères")
+     * @Assert\NotBlank
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255, maxMessage="Le prénom doit faire moins de 255 caractères")
+     * @Assert\NotBlank
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255, maxMessage="Le nom doit faire moins de 255 caractères")
+     * @Assert\NotBlank
      */
     private $firstname;
 
@@ -61,11 +77,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255, maxMessage="Le nom du fichier doit faire moins de 255 caractères")
      */
     private $profilePicture;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255, maxMessage="La déscription doit faire moins de 255 caractères")
      */
     private $description;
 
