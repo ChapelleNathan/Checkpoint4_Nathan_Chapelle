@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Posts;
+use App\Form\CommentsType;
 use App\Form\PostsType;
+use App\Repository\CommentsRepository;
 use App\Repository\PostsRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,12 +21,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostsController extends AbstractController
 {
     /**
-     * @Route("/", name="posts_index", methods={"GET"})
+     * @Route("/detail/{id}", name="posts_show", methods={"GET", "POST"})
      */
-    public function index(PostsRepository $postsRepository): Response
-    {
-        return $this->render('posts/index.html.twig', [
-            'posts' => $postsRepository->findAll(),
+    public function show(
+        Posts $post, Request $request, EntityManagerInterface $em, CommentsRepository $commentsRepository
+    ): Response {
+        $comment = new Comments();
+        $form = $this->createForm(CommentsType::class, $comment);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setUser($this->getUser());
+            $comment->setPost($post);
+            $em->persist($comment);
+            $em->flush();
+            return $this->redirectToRoute('posts_show', ['id' => $post->getId()]);
+        }
+        return $this->render('posts/show.html.twig', [
+            'post' => $post,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -51,15 +67,6 @@ class PostsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="posts_show", methods={"GET"})
-     */
-    public function show(Posts $post): Response
-    {
-        return $this->render('posts/show.html.twig', [
-            'post' => $post,
-        ]);
-    }
 
     /**
      * @Route("/{id}/edit", name="posts_edit", methods={"GET", "POST"})
