@@ -90,4 +90,22 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/{id}/suivre", name="follow", methods={"GET"})
+     */
+    public function follow(User $followedUser, EntityManagerInterface $em): Response
+    {
+        if ($this->getUser()->follow($followedUser)) {
+            $this->getUser()->removeFollowed($followedUser);
+            $followedUser->removeFollower($this->getUser());
+        } else {
+            $this->getUser()->addFollowed($followedUser);
+            $followedUser->addFollower($this->getUser());
+        }
+        $em->flush();
+        return $this->redirectToRoute('user_show', [
+            'id' => $followedUser->getId(),
+        ]);
+    }
 }

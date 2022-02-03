@@ -6,17 +6,74 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="text-center mt-4 mb-2">Mon profil</h1>
+<h1 class="text-center mt-4 mb-2">{{ app.user == user ? 'Mon profil' }}</h1>
 <img src="/{{ user.profilePicture }}" class="offset-5 profilePicture img-thumbnail rounded-circle"
     alt="photo de profil de {{ user.pseudo }}">
-<p class="text-center fs-2">{{ user.pseudo }}</p>
+<p class="text-center fs-2 m-1">{{ user.pseudo }}</p>
+<div class="follow d-flex justify-content-center">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') and user != app.user %}
+    {% if app.user.follow(user) %}
+    <a href="{{ path('user_follow', {id: user.id}) }}" class="btn btn-secondary col-4 mb-4">Ne plus suivre</a>
+    {% else %}
+    <a href="{{ path('user_follow', {id: user.id}) }}" class="btn btn-outline-secondary col-4 mb-4">Suivre</a>
+    {% endif %}
+    {% endif %}
+</div>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<div class="stats d-flex mb-3 justify-content-around">
+    <div class="col-3 text-center">
+        <div class="card bg-secondary">
+            <div class="card-body p-0">
+                <div class="row">
+                    <p class="m-0 stat">Abonnée</p>
+                </div>
+                <div class="row text-center">
+                    <p class="m-0">{{ user.getFollowers|length }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3 text-center">
+        <div class="card bg-secondary">
+            <div class="card-body p-0">
+                <div class="row text-center">
+                    <p class="m-0 stat">
+                        Abonnement
+                    </p>
+                </div>
+                <div class="row text-center">
+                    <p class="m-0">
+                        {{ user.getFollowed|length }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3 text-center">
+        <div class="card bg-secondary">
+            <div class="card-body p-0">
+                <div class="row text-center">
+                    <p class="m-0 stat">
+                        Postes
+                    </p>
+                </div>
+                <div class="row text-center">
+                    <p class="m-0">
+                        {{ user.getPosts|length }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <p class="col-10 offset-1">{{ user.description }}</p>
 <section class="posts">
     <h2 class="text-center mb-3 mt-5">Postes</h2>
     <hr class="m-1">
     {% for post in user.posts %}
     <div class="col-4">
-        <!--TODO faire le show d'un post -->
         <a href="">
             <img src="/{{ vich_uploader_asset(post) }}" class="img-fluid" alt="post de {{ user.pseudo }}">
         </a>
