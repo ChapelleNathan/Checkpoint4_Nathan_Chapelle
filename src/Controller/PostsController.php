@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Posts;
 use App\Form\PostsType;
 use App\Repository\PostsRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +38,7 @@ class PostsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setUser($this->getUser());
+            $post->setUpdatedAt(new DateTime());
             $entityManager->persist($post);
             $entityManager->flush();
 
