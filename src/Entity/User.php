@@ -313,4 +313,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function follow(User $user): bool
+    {
+        if ($this->getFollowed()->contains($user)) {
+            return true;
+        }
+        
+        return false;
+    }
 }
