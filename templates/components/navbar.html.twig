@@ -6,7 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav text-center">
                 {% if is_granted('ROLE_USER') %}
                 <a class="nav-link" href="{{ path('user_show', {id : app.user.id}) }}">
                     <img src="/{{ app.user.profilePicture }}" class="navProfile img-thumbnail rounded-circle" alt="photo de profil de {{ app.user.pseudo }}">
