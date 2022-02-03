@@ -11,46 +11,6 @@
 {% block body %}
 <h1 class="text-center text-center mt-4 mb-3">Votre Fil</h1>
 {% for post in posts %}
-<div class="card mb-4 mx-3 my-1">
-    <div class="row my-1">
-        <div class="col-2 ms-1 text-center p-0">
-            <a href="{{ path('user_show', {id: post.id}) }}">
-                <img src="{{ post.user.profilePicture }}" class="img-thumbnail pp rounded-circle"
-                    alt="photo de profil de {{ post.user.pseudo }}">
-            </a>
-        </div>
-        <div class="col p-0 d-flex">
-            <a href="{{ path('user_show', {id: post.id}) }}" class="d-flex text-decoration-none">
-                <p class="m-0 text-start align-self-center pseudo">{{ post.user.pseudo }}</p>
-            </a>
-        </div>
-    </div>
-    <img src="{{ post.picturePath }}" class="card-img-top rounded-0" alt="photo postée par {{ post.user.pseudo }}">
-    <div class="card-body py-1">
-        <div class="row">
-            <div class="likes d-flex col-10">
-                <div class="col-2 text-start">
-                    <i class="bi bi-heart"></i>
-                </div>
-                <div class="col-2 text-start">
-                    <i class="bi bi-chat"></i>
-                </div>
-            </div>
-            <div class="col-2 text-end">
-                <i class="bi bi-star"></i>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <p class="description">
-                    <span class="user">
-                        {{ post.user.pseudo }}
-                    </span>
-                    {{ post.description }}
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
+{% include "home/components/_posts.html.twig" %}
 {% endfor %}
 {% endblock %}
