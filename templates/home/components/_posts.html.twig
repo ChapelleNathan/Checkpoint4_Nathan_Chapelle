@@ -19,7 +19,7 @@
             <div class="likes d-flex col-10">
                 <div class="col-2 text-start">
                     <a class="text-decoration-none" href="{{ path('posts_like', {id: post.id}) }}">
-                        {{ app.user.asLike(post) ? '<i class="bi bi-heart-fill text-danger"></i>' : '<i
+                        {{ is_granted('IS_AUTHENTICATED_FULLY') and app.user.asLike(post) ? '<i class="bi bi-heart-fill text-danger"></i>' : '<i
                             class="bi bi-heart"></i>' }} {{ post.getLiked|length }}
                     </a>
                 </div>
