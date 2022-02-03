@@ -72,7 +72,7 @@
     <hr class="m-1">
     {% for post in user.posts %}
     <div class="col-4">
-        <a href="">
+        <a href="{{ path('posts_show', {id: post.id}) }}">
             <img src="/{{ vich_uploader_asset(post) }}" class="img-fluid" alt="post de {{ user.pseudo }}">
         </a>
     </div>
