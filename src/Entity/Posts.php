@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PostsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=PostsRepository::class)
+ * @Vich\Uploadable
  */
 class Posts
 {
@@ -28,9 +30,25 @@ class Posts
     private $picturePath;
 
     /**
+     * @Vich\UploadableField(mapping="post_file", fileNameProperty="picturePath")
+     */
+    private $pictureFile;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $description;
+
+    public function setPictureFile(File $image = null): Posts
+    {
+        $this->pictureFile = $image;
+        return $this;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
 
     public function getId(): ?int
     {
