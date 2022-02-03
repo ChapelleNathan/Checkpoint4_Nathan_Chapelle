@@ -35,6 +35,7 @@ Encore
     .addStyleEntry('feed', './assets/styles/feed.scss')
     .addStyleEntry('profile', './assets/styles/profile.scss')
     .addStyleEntry('connexion', './assets/styles/connexion.scss')
+    .addStyleEntry('post', './assets/styles/post.scss')
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
 
