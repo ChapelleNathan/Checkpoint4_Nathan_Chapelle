@@ -10,7 +10,10 @@
 
 {% block body %}
 <h1 class="text-center text-center mt-4 mb-3">Votre Fil</h1>
-{% for post in posts %}
-{% include "home/components/_posts.html.twig" %}
-{% endfor %}
+<section class="posts col-lg-6 offset-lg-3">
+    {% for post in posts %}
+    {% include "home/components/_posts.html.twig" %}
+    {% endfor %}
+</section>
+
 {% endblock %}

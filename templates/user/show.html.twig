@@ -7,9 +7,10 @@
 
 {% block body %}
 <h1 class="text-center mt-4 mb-2">{{ app.user == user ? 'Mon profil' }}</h1>
-<img src="/{{ user.profilePicture }}" class="offset-5 profilePicture img-thumbnail rounded-circle"
-    alt="photo de profil de {{ user.pseudo }}">
-<p class="text-center fs-2 m-1">{{ user.pseudo }}</p>
+
+<p class="text-center fs-2 m-1 my-3"><img src="/{{ user.profilePicture }}"
+        class="profilePicture img-thumbnail rounded-circle" alt="photo de profil de {{ user.pseudo }}"> {{
+    user.pseudo }}</p>
 <div class="follow d-flex justify-content-center">
     {% if is_granted('IS_AUTHENTICATED_FULLY') and user != app.user %}
     {% if app.user.follow(user) %}

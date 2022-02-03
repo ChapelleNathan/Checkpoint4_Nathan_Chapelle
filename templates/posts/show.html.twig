@@ -13,7 +13,7 @@
         {{ post.user.pseudo }}
     </h1>
 </a>
-<div class="card">
+<div class="card col-lg-6 offset-lg-3">
     <img class="img-fluid card-img-top" src="/{{ vich_uploader_asset(post) }}"
         alt="photo postée par {{ post.user.pseudo }}">
     <div class="card-body">
@@ -37,7 +37,7 @@
 {% include "comments/_form.html.twig" %}
 {% endif %}
 
-<section class="comments col-12 text-wrap">
+<section class="comments col-12 text-wrap col-lg-6 offset-lg-3">
     {% for comment in post.comments|reverse %}
     <div>
         <p class="comment"><img class="commentPicture img-thumbnail rounded-circle"
