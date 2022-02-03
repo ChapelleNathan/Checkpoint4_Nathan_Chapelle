@@ -19,6 +19,7 @@ class CommentsType extends AbstractType
                 'attr' => [
                     'class' => 'form-control rounded-top',
                     'placeholder' => 'Commenter...',
+                    'maxlength' => 255,
                 ],
             ])
         ;

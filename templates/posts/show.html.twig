@@ -34,11 +34,12 @@
     </div>
 </div>
 {% include "comments/_form.html.twig" %}
-<section class="comments">
+<section class="comments col-12 text-wrap">
     {% for comment in post.comments|reverse %}
     <div>
-        <p class=" comment"><img class="commentPicture img-thumbnail rounded-circle" src="/{{ comment.user.profilePicture }}"
-                alt="photo de profile de {{ comment.user.pseudo }}"><span class="fw-bold">{{ comment.user.pseudo }}</span> : {{ comment.comment }}</p>
+        <p class="comment"><img class="commentPicture img-thumbnail rounded-circle"
+                src="/{{ comment.user.profilePicture }}" alt="photo de profile de {{ comment.user.pseudo }}"><span
+                class="fw-bold">{{ comment.user.pseudo }}</span> : {{ comment.comment }}</p>
     </div>
     {% endfor %}
 </section>
