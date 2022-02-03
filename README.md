@@ -39,3 +39,8 @@ Vous pouvez maintenant utiliser notre merveilleux site en allant sur localhost:8
 ## Comptes
 
 Si vous voulez vous connecter sur le site, vous pouvez vous inscrire ou utiliser le compte john@doe.com avec "whoami" comme mot de passe
+
+## Ressources
+
+Vous pourrez admirer mon magnifique figma [ici](https://www.figma.com/file/Gkgw8Opg4luQCfgOh9Oj0L/Focusse)
+Et vous pourrez voir mon backlog [la](https://docs.google.com/spreadsheets/d/1QCqZhjap4UufvBpsEKdQKtp0QFjjrJZ-dOknnC9FSag/edit#gid=0)
