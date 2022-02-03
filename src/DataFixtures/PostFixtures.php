@@ -26,7 +26,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
         for($i = 0; $i < UserFixtures::USERS; $i++) {
             $post = new Posts();
             $post->setUser($this->getReference('user_' . $i));
-            $post->setPicturePath('uploads/posts/'. self::IMAGES[$i]);
+            $post->setPicturePath(self::IMAGES[$i]);
             $post->setDescription($faker->paragraph(2));
             $manager->persist($post);
         }
