@@ -19,7 +19,6 @@
     {% endif %}
     {% endif %}
 </div>
-{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 <div class="stats d-flex mb-3 justify-content-around">
     <div class="col-3 text-center">
         <div class="card bg-secondary">
@@ -66,7 +65,6 @@
         </div>
     </div>
 </div>
-{% endif %}
 
 <p class="col-10 offset-1">{{ user.description }}</p>
 <section class="posts">
