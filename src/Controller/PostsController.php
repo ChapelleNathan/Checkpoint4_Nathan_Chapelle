@@ -93,4 +93,20 @@ class PostsController extends AbstractController
 
         return $this->redirectToRoute('posts_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/{id}/like", name="posts_like", methods={"GET"})
+     */
+    public function likes(EntityManagerInterface $em, Posts $post)
+    {
+        if ($this->getUser()->asLike($post)) {
+            $this->getUser()->removeLike($post);
+        } else {
+            $this->getUser()->addLike($post);
+        }
+        $em->flush();
+        return $this->redirectToRoute('posts_show', [
+            'id' => $post->getId(),
+        ]);
+    }
 }

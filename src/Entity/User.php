@@ -79,6 +79,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $followed;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Posts::class, inversedBy="liked")
+     */
+    private $likes;
+
 
 
     public function __construct()
@@ -86,6 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->posts = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->followed = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -330,6 +336,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             return true;
         }
 
+        return false;
+    }
+
+    /**
+     * @return Collection|Posts[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Posts $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Posts $like): self
+    {
+        $this->likes->removeElement($like);
+
+        return $this;
+    }
+
+    public function asLike(Posts $post): bool
+    {
+        if ($this->getLikes()->contains($post)) {
+            return true;
+        }
         return false;
     }
 }

@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * @ORM\Entity(repositoryClass=PostsRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\PostsRepository")
  * @Vich\Uploadable
  */
 class Posts
@@ -44,6 +46,16 @@ class Posts
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="likes")
+     */
+    private $liked;
+
+    public function __construct()
+    {
+        $this->liked = new ArrayCollection();
+    }
 
     public function setPictureFile(File $image = null): Posts
     {
@@ -108,6 +120,33 @@ class Posts
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getLiked(): Collection
+    {
+        return $this->liked;
+    }
+
+    public function addLiked(User $liked): self
+    {
+        if (!$this->liked->contains($liked)) {
+            $this->liked[] = $liked;
+            $liked->addLike($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLiked(User $liked): self
+    {
+        if ($this->liked->removeElement($liked)) {
+            $liked->removeLike($this);
+        }
 
         return $this;
     }
