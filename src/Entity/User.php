@@ -67,9 +67,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $description;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="followed")
+     */
+    private $followers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="followers")
+     */
+    private $followed;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->followers = new ArrayCollection();
+        $this->followed = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,6 +259,57 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFollowers(): Collection
+    {
+        return $this->followers;
+    }
+
+    public function addFollower(self $follower): self
+    {
+        if (!$this->followers->contains($follower)) {
+            $this->followers[] = $follower;
+        }
+
+        return $this;
+    }
+
+    public function removeFollower(self $follower): self
+    {
+        $this->followers->removeElement($follower);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFollowed(): Collection
+    {
+        return $this->followed;
+    }
+
+    public function addFollowed(self $followed): self
+    {
+        if (!$this->followed->contains($followed)) {
+            $this->followed[] = $followed;
+            $followed->addFollower($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFollowed(self $followed): self
+    {
+        if ($this->followed->removeElement($followed)) {
+            $followed->removeFollower($this);
+        }
 
         return $this;
     }
