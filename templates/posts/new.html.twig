@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Créer un poste{% endblock %}
+
+{% block body %}
+<div class="new-post mt-5">
+    <h1 class="text-center mt-4 mb-3">Créer votre nouveau poste !</h1>
+
+    <div class="card">
+        <div class="card-body">
+            {{ include('posts/_form.html.twig') }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('app_home') }}">Focusse</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav text-center">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="nav-link" href="{{ path('user_show', {id : app.user.id}) }}">
+                    <img src="/{{ app.user.profilePicture }}" class="navProfile img-thumbnail rounded-circle" alt="photo de profil de {{ app.user.pseudo }}">
+                    {{ app.user.pseudo }}
+                </a>
+                <a href="{{ path('posts_new') }}" class="nav-link">Créer un Poste</a>
+                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                {% else %}
+                <a class="nav-link" href="{{ path('login') }}">Se connecter</a>
+                {% endif %}
+                <!--TODO Faire le liens adaptatif quand la connexion sera faite-->
+            </div>
+        </div>
+    </div>
+</nav>

@@ -3,7 +3,7 @@
 
 body {
     margin: 0;
-    background-color: $background;
+    background-color: $light;
 }
 
 p {
@@ -16,5 +16,10 @@ h3,
 h4,
 h5 {
     color : $secondary;
+}
+
+.navProfile {
+    width: 35px;
+    height: 35px;
 }
 

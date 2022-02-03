@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Mon Profile{% endblock %}
+{% block stylesheets %}
+{{ encore_entry_link_tags('profile') }}
+{% endblock %}
+
+{% block body %}
+<h1 class="text-center mt-4 mb-2">{{ app.user == user ? 'Mon profil' }}</h1>
+
+<p class="text-center fs-2 m-1 my-3"><img src="/{{ user.profilePicture }}"
+        class="profilePicture img-thumbnail rounded-circle" alt="photo de profil de {{ user.pseudo }}"> {{
+    user.pseudo }}</p>
+<div class="follow d-flex justify-content-center">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') and user != app.user %}
+    {% if app.user.follow(user) %}
+    <a href="{{ path('user_follow', {id: user.id}) }}" class="btn btn-secondary col-4 mb-4">Ne plus suivre</a>
+    {% else %}
+    <a href="{{ path('user_follow', {id: user.id}) }}" class="btn btn-outline-secondary col-4 mb-4">Suivre</a>
+    {% endif %}
+    {% endif %}
+</div>
+<div class="stats d-flex mb-3 justify-content-around">
+    <div class="col-3 text-center">
+        <div class="card bg-secondary">
+            <div class="card-body p-0">
+                <div class="row">
+                    <p class="m-0 stat">Abonnée</p>
+                </div>
+                <div class="row text-center">
+                    <p class="m-0">{{ user.getFollowers|length }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3 text-center">
+        <div class="card bg-secondary">
+            <div class="card-body p-0">
+                <div class="row text-center">
+                    <p class="m-0 stat">
+                        Abonnement
+                    </p>
+                </div>
+                <div class="row text-center">
+                    <p class="m-0">
+                        {{ user.getFollowed|length }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3 text-center">
+        <div class="card bg-secondary">
+            <div class="card-body p-0">
+                <div class="row text-center">
+                    <p class="m-0 stat">
+                        Postes
+                    </p>
+                </div>
+                <div class="row text-center">
+                    <p class="m-0">
+                        {{ user.getPosts|length }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p class="col-10 offset-1">{{ user.description }}</p>
+<section class="posts">
+    <h2 class="text-center mb-3 mt-5">Postes</h2>
+    <hr class="m-1">
+    {% for post in user.posts %}
+    <div class="col-4">
+        <a href="{{ path('posts_show', {id: post.id}) }}">
+            <img src="/{{ vich_uploader_asset(post) }}" class="img-fluid" alt="post de {{ user.pseudo }}">
+        </a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
